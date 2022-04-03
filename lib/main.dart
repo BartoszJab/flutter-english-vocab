@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: backgroundColor,
         canvasColor: secondaryColor,
       ),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
