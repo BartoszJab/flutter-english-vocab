@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_english_app/constants.dart';
-import 'package:flutter_english_app/home_page.dart';
+import 'package:flutter_english_app/views/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_english_app/repositories/word_repository.dart';
 
 void main() => runApp(const App());
 
@@ -15,7 +17,10 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: backgroundColor,
         canvasColor: secondaryColor,
       ),
-      home: HomePage(),
+      home: RepositoryProvider(
+        create: (context) => WordRepository(),
+        child: HomePage(),
+      ),
     );
   }
 }
