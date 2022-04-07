@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
                 return WordPage(word: state.word);
               }));
             } else if (state is WordSearchErrorState) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               _showErrorSnackBar(context);
             }
           },
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 void _showErrorSnackBar(BuildContext context) {
-  const snackBar = SnackBar(content: Text("Wystąpił błąd"));
+  const snackBar = SnackBar(content: Text("Nie znaleziono podanego słowa"));
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
