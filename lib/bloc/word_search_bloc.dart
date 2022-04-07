@@ -7,17 +7,24 @@ part 'word_search_event.dart';
 part 'word_search_state.dart';
 
 class WordSearchBloc extends Bloc<WordSearchEvent, WordSearchState> {
+  final Map<String, WordModel> _cache = {};
   final WordRepository _wordRepository;
 
   WordSearchBloc(this._wordRepository) : super(WordSearchInitial()) {
     on<LoadWordEvent>((event, emit) async {
       emit(WordSearchLoadingState());
 
-      try {
-        final word = await _wordRepository.getWord(event.searchedWord);
-        emit(WordSearchLoadedState(word: word));
-      } catch (e) {
-        emit(WordSearchErrorState(e.toString()));
+      if (_cache.containsKey(event.searchedWord)) {
+        final word = _cache[event.searchedWord];
+        emit(WordSearchLoadedState(word: word!));
+      } else {
+        try {
+          final word = await _wordRepository.getWord(event.searchedWord);
+          _cache[event.searchedWord] = word;
+          emit(WordSearchLoadedState(word: word));
+        } catch (e) {
+          emit(WordSearchErrorState(e.toString()));
+        }
       }
     });
   }
