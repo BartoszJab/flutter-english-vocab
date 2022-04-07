@@ -1,4 +1,4 @@
-const popularWords = [
+List<String> popularWords = [
   "a",
   "abandon",
   "ability",
