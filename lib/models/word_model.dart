@@ -1,6 +1,6 @@
 class WordModel {
-  String? word;
-  List<MeaningModel>? meanings;
+  late String word;
+  late List<MeaningModel> meanings;
 
   WordModel({
     required this.word,
@@ -13,15 +13,15 @@ class WordModel {
     if (json["meanings"] != null) {
       meanings = [];
       for (var element in (json["meanings"] as List)) {
-        meanings!.add(MeaningModel.fromJson(element));
+        meanings.add(MeaningModel.fromJson(element));
       }
     }
   }
 }
 
 class MeaningModel {
-  String? partOfSpeech;
-  List<DefinitionModel>? definitions;
+  late String partOfSpeech;
+  late List<DefinitionModel>? definitions;
 
   MeaningModel({
     required this.partOfSpeech,
@@ -41,7 +41,7 @@ class MeaningModel {
 }
 
 class DefinitionModel {
-  String? definition;
+  late String definition;
   List<String>? synonyms;
   List<String>? antonyms;
 
