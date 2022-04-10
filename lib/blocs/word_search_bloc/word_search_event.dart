@@ -6,5 +6,7 @@ abstract class WordSearchEvent {}
 class LoadWordEvent extends WordSearchEvent {
   final String searchedWord;
 
-  LoadWordEvent({required this.searchedWord});
+  LoadWordEvent({
+    required this.searchedWord,
+  });
 }

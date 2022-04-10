@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_english_app/bloc/word_search_bloc.dart';
+import 'package:flutter_english_app/blocs/word_search_bloc/word_search_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english_app/constants.dart';
 import 'package:flutter_english_app/popular_words.dart';
@@ -17,7 +17,6 @@ class _CommonWordWidgetState extends State<CommonWordWidget> {
   @override
   void initState() {
     _pageController = PageController();
-    popularWords.shuffle();
     super.initState();
   }
 
@@ -54,7 +53,7 @@ class _CommonWordWidgetState extends State<CommonWordWidget> {
       child: PageView.builder(
         itemBuilder: ((_, index) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               context.read<WordSearchBloc>().add(
                     LoadWordEvent(
                       searchedWord: popularWords.elementAt(index),
