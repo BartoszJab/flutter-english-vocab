@@ -48,36 +48,44 @@ class _CommonWordWidgetState extends State<CommonWordWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
-      child: PageView.builder(
-        itemBuilder: ((_, index) {
-          return GestureDetector(
-            onTap: () async {
-              context.read<WordSearchBloc>().add(
-                    LoadWordEvent(
-                      searchedWord: popularWords.elementAt(index),
-                    ),
-                  );
-            },
-            onHorizontalDragEnd: ((details) {
-              if (details.primaryVelocity! < 0) {
-                _nextCard();
-              } else if (details.primaryVelocity! > 0) {
-                _previousCard();
-              }
+    return Column(
+      children: [
+        const Text(
+          'Najczęściej występujące',
+          style: TextStyle(fontSize: 24.0),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: PageView.builder(
+            itemBuilder: ((_, index) {
+              return GestureDetector(
+                onTap: () async {
+                  context.read<WordSearchBloc>().add(
+                        LoadWordEvent(
+                          searchedWord: popularWords.elementAt(index),
+                        ),
+                      );
+                },
+                onHorizontalDragEnd: ((details) {
+                  if (details.primaryVelocity! < 0) {
+                    _nextCard();
+                  } else if (details.primaryVelocity! > 0) {
+                    _previousCard();
+                  }
+                }),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: WordCardWidget(
+                    currentItemIndex: index,
+                  ),
+                ),
+              );
             }),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: WordCardWidget(
-                currentItemIndex: index,
-              ),
-            ),
-          );
-        }),
-        itemCount: popularWords.length,
-        controller: _pageController,
-      ),
+            itemCount: popularWords.length,
+            controller: _pageController,
+          ),
+        ),
+      ],
     );
   }
 }

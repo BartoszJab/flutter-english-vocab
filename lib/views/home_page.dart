@@ -72,10 +72,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SearchWordWidget(),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Najczęściej występujące',
-                      style: TextStyle(fontSize: 24.0),
-                    ),
                     const CommonWordWidget(),
                   ],
                 ),
