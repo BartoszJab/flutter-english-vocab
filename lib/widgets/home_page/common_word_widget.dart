@@ -53,7 +53,7 @@ class _CommonWordWidgetState extends State<CommonWordWidget> {
       children: [
         const Text(
           'Najczęściej występujące',
-          style: TextStyle(fontSize: 24.0),
+          style: TextStyle(fontSize: labelSize),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,

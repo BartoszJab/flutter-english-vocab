@@ -8,6 +8,7 @@ import 'package:flutter_english_app/repositories/word_repository.dart';
 import 'package:flutter_english_app/views/translation_page.dart';
 import 'package:flutter_english_app/views/word_page.dart';
 import 'package:flutter_english_app/widgets/home_page/common_word_widget.dart';
+import 'package:flutter_english_app/widgets/home_page/favorite_words_widget.dart';
 import 'package:flutter_english_app/widgets/home_page/search_word_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,75 +62,17 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
-                        "Ustawienia",
-                        style: TextStyle(fontSize: 22),
-                      ),
-                      IconButton(
-                        iconSize: 32,
-                        icon: const Icon(Icons.settings),
-                        onPressed: () {},
-                      )
-                    ],
-                  ),
-                  const Divider(
+                children: const [
+                  SearchWordWidget(),
+                  SizedBox(height: 10),
+                  CommonWordWidget(),
+                  Divider(
                     thickness: 2.0,
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
-                  const SearchWordWidget(),
-                  const SizedBox(height: 20),
-                  const CommonWordWidget(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Ulubione",
-                    style: TextStyle(fontSize: 24.0),
-                  ),
-                  BlocBuilder<FavoriteWordsBloc, FavoriteWordsState>(
-                    builder: (context, state) {
-                      if (state is FavoriteWordsLoadedWordsState) {
-                        if (state.favoriteWords.isEmpty) {
-                          return const Text("Nie masz ulubionych słów");
-                        }
-
-                        // return Text(state.favoriteWords.length.toString());
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: state.favoriteWords.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                color: secondaryColor,
-                                child: ListTile(
-                                  onTap: () => context
-                                      .read<WordSearchBloc>()
-                                      .add(LoadWordEvent(
-                                          searchedWord:
-                                              state.favoriteWords[index])),
-                                  leading: Text((index + 1).toString()),
-                                  title: Text(state.favoriteWords[index]),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () => context
-                                        .read<FavoriteWordsBloc>()
-                                        .add(FavoriteWordsAddRemoveEvent(
-                                            state.favoriteWords[index])),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Container();
-                    },
-                  )
+                  FavoriteWordsWidget(),
                 ],
               ),
             ),
