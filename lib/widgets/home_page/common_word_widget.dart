@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english_app/blocs/favorite_words_bloc/favorite_words_bloc.dart';
 import 'package:flutter_english_app/blocs/word_search_bloc/word_search_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english_app/constants.dart';
@@ -55,7 +56,7 @@ class _CommonWordWidgetState extends State<CommonWordWidget> {
           style: TextStyle(fontSize: 24.0),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.2,
           child: PageView.builder(
             itemBuilder: ((_, index) {
               return GestureDetector(
@@ -119,16 +120,6 @@ class WordCardWidget extends StatelessWidget {
           ),
           const SizedBox(
             height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.red,
-                size: 42.0,
-              ),
-            ],
           ),
         ],
       ),

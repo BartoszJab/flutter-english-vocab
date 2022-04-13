@@ -25,6 +25,12 @@ class WordSearchBloc extends Bloc<WordSearchEvent, WordSearchState> {
           final word =
               await _wordRepository.getWordTranslation(event.searchedWord);
           _cache[event.searchedWord] = word;
+
+          if (word.translatedPhrases.isEmpty) {
+            emit(WordSearchErrorState("Nic nie znaleziono"));
+            return;
+          }
+
           emit(WordSearchLoadedState(translation: word));
         } catch (e) {
           emit(WordSearchErrorState(e.toString()));

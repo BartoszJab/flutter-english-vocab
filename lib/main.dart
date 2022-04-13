@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_english_app/constants.dart';
+import 'package:flutter_english_app/repositories/favorite_words_repository.dart';
 import 'package:flutter_english_app/views/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english_app/repositories/word_repository.dart';
@@ -11,16 +12,22 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor,
-        canvasColor: secondaryColor,
-      ),
-      home: RepositoryProvider(
-        create: (context) => WordRepository(),
-        child: HomePage(),
-      ),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => WordRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => FavoriteWordsRepository(),
+        ),
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.dark().copyWith(
+            scaffoldBackgroundColor: backgroundColor,
+            canvasColor: secondaryColor,
+          ),
+          home: const HomePage()),
     );
   }
 }

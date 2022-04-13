@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english_app/blocs/favorite_words_bloc/favorite_words_bloc.dart';
 import 'package:flutter_english_app/blocs/word_search_bloc/word_search_bloc.dart';
+import 'package:flutter_english_app/constants.dart';
 import 'package:flutter_english_app/popular_words.dart';
+import 'package:flutter_english_app/repositories/favorite_words_repository.dart';
 import 'package:flutter_english_app/repositories/word_repository.dart';
 import 'package:flutter_english_app/views/translation_page.dart';
 import 'package:flutter_english_app/views/word_page.dart';
@@ -24,10 +27,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WordSearchBloc(
-        context.read<WordRepository>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => WordSearchBloc(
+            context.read<WordRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => FavoriteWordsBloc(
+            context.read<FavoriteWordsRepository>(),
+          )..add(FavoriteWordsGetFavoritesEvent()),
+        ),
+      ],
       child: Scaffold(
         body: BlocListener<WordSearchBloc, WordSearchState>(
           listener: (context, state) {
@@ -35,8 +47,10 @@ class _HomePageState extends State<HomePage> {
               _showLoadingSnackBar(context);
             } else if (state is WordSearchLoadedState) {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return TranslationPage(translation: state.translation);
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return BlocProvider.value(
+                    value: BlocProvider.of<FavoriteWordsBloc>(context),
+                    child: TranslationPage(translation: state.translation));
               }));
             } else if (state is WordSearchErrorState) {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -46,35 +60,77 @@ class _HomePageState extends State<HomePage> {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          "Ustawienia",
-                          style: TextStyle(fontSize: 22),
-                        ),
-                        IconButton(
-                          iconSize: 32,
-                          icon: const Icon(Icons.settings),
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
-                    const Divider(
-                      thickness: 2.0,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const SearchWordWidget(),
-                    const SizedBox(height: 20),
-                    const CommonWordWidget(),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        "Ustawienia",
+                        style: TextStyle(fontSize: 22),
+                      ),
+                      IconButton(
+                        iconSize: 32,
+                        icon: const Icon(Icons.settings),
+                        onPressed: () {},
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 2.0,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SearchWordWidget(),
+                  const SizedBox(height: 20),
+                  const CommonWordWidget(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Ulubione",
+                    style: TextStyle(fontSize: 24.0),
+                  ),
+                  BlocBuilder<FavoriteWordsBloc, FavoriteWordsState>(
+                    builder: (context, state) {
+                      if (state is FavoriteWordsLoadedWordsState) {
+                        if (state.favoriteWords.isEmpty) {
+                          return const Text("Nie masz ulubionych słów");
+                        }
+
+                        // return Text(state.favoriteWords.length.toString());
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: state.favoriteWords.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                color: secondaryColor,
+                                child: ListTile(
+                                  onTap: () => context
+                                      .read<WordSearchBloc>()
+                                      .add(LoadWordEvent(
+                                          searchedWord:
+                                              state.favoriteWords[index])),
+                                  leading: Text((index + 1).toString()),
+                                  title: Text(state.favoriteWords[index]),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () => context
+                                        .read<FavoriteWordsBloc>()
+                                        .add(FavoriteWordsAddRemoveEvent(
+                                            state.favoriteWords[index])),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
+                  )
+                ],
               ),
             ),
           ),

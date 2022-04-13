@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english_app/blocs/favorite_words_bloc/favorite_words_bloc.dart';
 import 'package:flutter_english_app/constants.dart';
 import 'package:flutter_english_app/models/translation_model.dart';
-import 'package:flutter_english_app/models/word_model.dart';
 import 'package:flutter_english_app/widgets/translation_page/translation_card_widget.dart';
-import 'package:flutter_english_app/widgets/word_page/definitions_list_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TranslationPage extends StatefulWidget {
   final TranslationModel translation;
@@ -56,6 +56,35 @@ class _WordPageState extends State<TranslationPage> {
                       fontStyle: FontStyle.italic,
                     ),
                   ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      context.read<FavoriteWordsBloc>().add(
+                          FavoriteWordsAddRemoveEvent(
+                              widget.translation.englishWord.toLowerCase()));
+                    },
+                    icon: BlocBuilder<FavoriteWordsBloc, FavoriteWordsState>(
+                      builder: (context, state) {
+                        if (state is FavoriteWordsLoadedWordsState) {
+                          if (state.favoriteWords.contains(
+                              widget.translation.englishWord.toLowerCase())) {
+                            return const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 32.0,
+                            );
+                          } else {
+                            return const Icon(
+                              Icons.favorite,
+                              size: 32.0,
+                            );
+                          }
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  )
                 ],
               ),
               const Divider(thickness: 2.0),
