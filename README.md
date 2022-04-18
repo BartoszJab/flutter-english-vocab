@@ -1,16 +1,8 @@
-# flutter_english_app
+# English vocab
+Flutter application which translates english vocabulary to polish language with examples. It contains 3000 most common words according to "https://www.ef.com/wwen/english-resources/english-vocabulary/top-3000-words/". User may also look for a word using a search bar. The application scraps the "https://glosbe.com/" page. 
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Screens
+## Home page
+![Home](images/home_page.PNG)
+## Translation page
+![Translation](images/translation_page.PNG)
