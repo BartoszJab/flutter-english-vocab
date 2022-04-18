@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_english_app/blocs/favorite_words_bloc/favorite_words_bloc.dart';
 import 'package:flutter_english_app/blocs/word_search_bloc/word_search_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english_app/constants.dart';

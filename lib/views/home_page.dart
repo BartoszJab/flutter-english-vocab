@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_english_app/blocs/favorite_words_bloc/favorite_words_bloc.dart';
 import 'package:flutter_english_app/blocs/word_search_bloc/word_search_bloc.dart';
-import 'package:flutter_english_app/constants.dart';
 import 'package:flutter_english_app/popular_words.dart';
 import 'package:flutter_english_app/repositories/favorite_words_repository.dart';
 import 'package:flutter_english_app/repositories/word_repository.dart';
 import 'package:flutter_english_app/views/translation_page.dart';
-import 'package:flutter_english_app/views/word_page.dart';
 import 'package:flutter_english_app/widgets/home_page/common_word_widget.dart';
 import 'package:flutter_english_app/widgets/home_page/favorite_words_widget.dart';
 import 'package:flutter_english_app/widgets/home_page/search_word_widget.dart';

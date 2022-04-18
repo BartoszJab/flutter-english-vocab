@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_english_app/models/translation_model.dart';
 
 class TranslationCardWidget extends StatelessWidget {
   final String translatedPhrase;

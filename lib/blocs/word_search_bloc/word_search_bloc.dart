@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_english_app/models/translation_model.dart';
-import 'package:flutter_english_app/models/word_model.dart';
 import 'package:flutter_english_app/repositories/word_repository.dart';
 import 'package:meta/meta.dart';
 

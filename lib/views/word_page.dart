@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_english_app/constants.dart';
 import 'package:flutter_english_app/models/word_model.dart';
 import 'package:flutter_english_app/widgets/word_page/definitions_list_widget.dart';
 
 class WordPage extends StatefulWidget {
   final WordModel word;
-  WordPage({Key? key, required this.word}) : super(key: key);
+  const WordPage({Key? key, required this.word}) : super(key: key);
 
   @override
   State<WordPage> createState() => _WordPageState();

@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_english_app/database/favorite_words_database.dart';
 import 'package:flutter_english_app/repositories/favorite_words_repository.dart';
 import 'package:meta/meta.dart';
 
