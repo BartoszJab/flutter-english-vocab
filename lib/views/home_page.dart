@@ -58,9 +58,9 @@ class _HomePageState extends State<HomePage> {
               _showErrorSnackBar(context);
             }
           },
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: SafeArea(
               child: Column(
                 children: const [
                   SearchWordWidget(),

@@ -17,7 +17,8 @@ class FavoriteWordsWidget extends StatelessWidget {
           }
 
           // return Text(state.favoriteWords.length.toString());
-          return Expanded(
+          return SizedBox(
+            height: 300,
             child: Column(
               children: [
                 const Text(
